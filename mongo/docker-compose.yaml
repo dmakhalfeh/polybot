@@ -1,0 +1,59 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  mongo1:
+    image: mongo:5
+    container_name: mongo1
+    ports:
+      - "27017:27017"
+    entrypoint: ["mongod", "--replSet", "myReplicaSet", "--bind_ip", "localhost,mongo1"]
+    volumes:
+      - /Users/daniel/Documents/DevOps/docker/mongo/mongo1:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+      - mongoCluster
+  mongo2:
+    image: mongo:5
+    container_name: mongo2
+    ports:
+      - "27018:27017"
+    entrypoint: ["mongod", "--replSet", "myReplicaSet", "--bind_ip", "localhost,mongo2"]
+    volumes:
+      - /Users/daniel/Documents/DevOps/docker/mongo/mongo2:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+       - mongoCluster
+  mongo3:
+      image: mongo:5
+      container_name: mongo3
+      ports:
+        - "27019:27017"
+      entrypoint: ["mongod", "--replSet", "myReplicaSet", "--bind_ip", "localhost,mongo3"]
+      volumes:
+        - /Users/daniel/Documents/DevOps/docker/mongo/mongo3:/data/db
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: admin
+        MONGO_INITDB_ROOT_PASSWORD: password
+      networks:
+        - mongoCluster
+  mongosetup:
+    image: mongo:5
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    volumes:
+      - /Users/daniel/Documents/DevOps/github/atech-devops-nov-2023/docker_project/mongo:/scripts
+    restart: "no"
+    entrypoint: [ "bash", "/scripts/mongo_setup.sh" ]
+    networks:
+      - mongoCluster
+
+networks:
+  mongoCluster:
+    driver: bridge

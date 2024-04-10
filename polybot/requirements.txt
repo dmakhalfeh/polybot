@@ -1,0 +1,10 @@
+pyTelegramBotAPI>=4.12.0
+loguru>=0.7.0
+requests>=2.31.0
+flask>=2.3.2
+
+PyYAML~=6.0.1
+telebot~=0.0.5
+detect~=2020.12.3
+boto3~=1.34.44
+botocore~=1.34.44

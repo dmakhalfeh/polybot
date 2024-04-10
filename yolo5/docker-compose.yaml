@@ -1,0 +1,19 @@
+version: '2.6'
+
+services:
+  polybot:
+    image: danielmak1/yolovdaniel
+    container_name: yolov
+    ports:
+      - "8081:8081"
+    environment:
+      - BUCKET_NAME=daniel-yolo
+    volumes:
+      - /credentials:/root/:ro
+
+    networks:
+      - mongoCluster
+
+networks:
+  mongoCluster:
+    driver: bridge

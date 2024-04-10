@@ -1,0 +1,19 @@
+# Use root/example as user/password credentials
+version: '2.6'
+
+services:
+  polybot:
+    image: danielmak1/polybotdaniel:latest
+    container_name: polybot
+    ports:
+      - "8443:8443"
+    environment:
+      - TELEGRAM_TOKEN=6759342020:AAFSAE0Fnv2lX4RCOdzqwu4tSsykVN6MXUs
+      - TELEGRAM_APP_URL=https://makhalfeh.duckdns.org:8443
+
+    networks:
+      - mongoCluster
+
+networks:
+  mongoCluster:
+    driver: bridge
